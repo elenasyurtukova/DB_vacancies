@@ -15,7 +15,7 @@ class HHParser:
         response = requests.get(self.__url_employers, params=params)
         response.raise_for_status()
         employers = response.json()["items"]
-        return [{"id": employer["id"], "name": employer["name"]} for employer in employers]
+        return [{"employer_id": employer["id"], "employer_name": employer["name"]} for employer in employers]
 
 
     def get_vacancies_by_employer(self, employer_id: str) -> list[dict]:
@@ -31,7 +31,7 @@ class HHParser:
         employers = self.get_employers()
         all_vacancies = []
         for employer in employers:
-            vacancies = self.get_vacancies_by_employer(employer["id"])
+            vacancies = self.get_vacancies_by_employer(employer["employer_id"])
             all_vacancies.extend([self.salary_for_vacancy(vacancy) for vacancy in vacancies])
         return all_vacancies
 
@@ -45,7 +45,8 @@ class HHParser:
         else:
             salary_from = 0
             salary_to = 0
-        return {"id": vacancy["id"], "name": vacancy["name"], "area": vacancy["area"]["name"],
+        return {"vacancy_id": vacancy["id"], "vacancy_name": vacancy["name"], "area": vacancy["area"]["name"],
                 "url": vacancy["alternate_url"], "salary_from": salary_from, "salary_to": salary_to,
                 "employer_id": vacancy["employer"]["id"]}
+
 
