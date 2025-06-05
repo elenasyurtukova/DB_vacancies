@@ -46,8 +46,6 @@ class HHParser:
             salary_from = 0
             salary_to = 0
         return {"id": vacancy["id"], "name": vacancy["name"], "area": vacancy["area"]["name"],
-                "url": vacancy["alternate_url"], "salary_from": salary_from, "salary_to": salary_to}
+                "url": vacancy["alternate_url"], "salary_from": salary_from, "salary_to": salary_to,
+                "employer_id": vacancy["employer"]["id"]}
 
-
-hh_parser = HHParser()
-print(hh_parser.get_all_vacancies_by_employers())
